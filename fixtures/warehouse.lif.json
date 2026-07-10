@@ -1,0 +1,352 @@
+{
+  "metaInformation": {
+    "projectIdentification": "Nordhavn Plant AGV",
+    "creator": "LIF Web Components fixtures",
+    "exportTimestamp": "2026-07-06T10:00:00.00Z",
+    "lifVersion": "1.0.0"
+  },
+  "layouts": [
+    {
+      "layoutId": "ground",
+      "layoutName": "Ground floor",
+      "layoutVersion": "3",
+      "layoutLevelId": "0",
+      "layoutDescription": "Production hall, dock and charging area",
+      "nodes": [
+        {
+          "nodeId": "n-dock",
+          "nodeName": "Dock",
+          "mapId": "map-ground",
+          "nodePosition": { "x": 0.0, "y": 0.0 },
+          "vehicleTypeNodeProperties": [
+            { "vehicleTypeId": "acme.tugger" },
+            { "vehicleTypeId": "acme.forklift" }
+          ]
+        },
+        {
+          "nodeId": "n-aisle-w",
+          "nodeName": "Aisle west",
+          "mapId": "map-ground",
+          "nodePosition": { "x": 4.0, "y": 0.0 },
+          "vehicleTypeNodeProperties": [
+            { "vehicleTypeId": "acme.tugger" },
+            { "vehicleTypeId": "acme.forklift" }
+          ]
+        },
+        {
+          "nodeId": "n-aisle-e",
+          "nodeName": "Aisle east",
+          "mapId": "map-ground",
+          "nodePosition": { "x": 12.0, "y": 0.0 },
+          "vehicleTypeNodeProperties": [
+            { "vehicleTypeId": "acme.tugger" },
+            { "vehicleTypeId": "acme.forklift" }
+          ]
+        },
+        {
+          "nodeId": "n-charge",
+          "nodeName": "Charger 1",
+          "mapId": "map-ground",
+          "nodePosition": { "x": 16.0, "y": 0.0 },
+          "vehicleTypeNodeProperties": [
+            {
+              "vehicleTypeId": "acme.tugger",
+              "theta": 0.0,
+              "actions": [
+                {
+                  "actionType": "startCharging",
+                  "requirementType": "CONDITIONAL",
+                  "blockingType": "HARD"
+                },
+                {
+                  "actionType": "stopCharging",
+                  "requirementType": "CONDITIONAL",
+                  "blockingType": "HARD"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "nodeId": "n-pick",
+          "nodeName": "Pick face",
+          "mapId": "map-ground",
+          "nodePosition": { "x": 4.0, "y": 6.0 },
+          "vehicleTypeNodeProperties": [
+            {
+              "vehicleTypeId": "acme.forklift",
+              "theta": 1.5707963267948966,
+              "actions": [
+                {
+                  "actionType": "pick",
+                  "actionDescription": "Pick EUR pallet from rack",
+                  "requirementType": "CONDITIONAL",
+                  "blockingType": "HARD",
+                  "actionParameters": [{ "key": "loadType", "value": "EUR-pallet" }]
+                },
+                {
+                  "actionType": "drop",
+                  "requirementType": "CONDITIONAL",
+                  "blockingType": "HARD",
+                  "actionParameters": [{ "key": "loadType", "value": "EUR-pallet" }]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "nodeId": "n-lift-g",
+          "nodeName": "Lift door ground",
+          "mapId": "map-ground",
+          "nodePosition": { "x": 12.0, "y": 6.0 },
+          "vehicleTypeNodeProperties": [{ "vehicleTypeId": "acme.tugger" }]
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "e-dock-west",
+          "startNodeId": "n-dock",
+          "endNodeId": "n-aisle-w",
+          "vehicleTypeEdgeProperties": [
+            {
+              "vehicleTypeId": "acme.tugger",
+              "vehicleOrientation": 0.0,
+              "orientationType": "TANGENTIAL",
+              "rotationAllowed": false,
+              "maxSpeed": 1.6
+            },
+            {
+              "vehicleTypeId": "acme.forklift",
+              "vehicleOrientation": 0.0,
+              "orientationType": "TANGENTIAL",
+              "rotationAllowed": false,
+              "maxSpeed": 1.2
+            }
+          ]
+        },
+        {
+          "edgeId": "e-west-east",
+          "startNodeId": "n-aisle-w",
+          "endNodeId": "n-aisle-e",
+          "vehicleTypeEdgeProperties": [
+            {
+              "vehicleTypeId": "acme.tugger",
+              "vehicleOrientation": 0.0,
+              "orientationType": "TANGENTIAL",
+              "rotationAllowed": false,
+              "rotationAtStartNodeAllowed": "BOTH",
+              "rotationAtEndNodeAllowed": "BOTH"
+            }
+          ]
+        },
+        {
+          "edgeId": "e-east-west",
+          "startNodeId": "n-aisle-e",
+          "endNodeId": "n-aisle-w",
+          "vehicleTypeEdgeProperties": [
+            {
+              "vehicleTypeId": "acme.tugger",
+              "vehicleOrientation": 3.141592653589793,
+              "orientationType": "TANGENTIAL",
+              "rotationAllowed": false
+            }
+          ]
+        },
+        {
+          "edgeId": "e-east-charge",
+          "startNodeId": "n-aisle-e",
+          "endNodeId": "n-charge",
+          "vehicleTypeEdgeProperties": [
+            {
+              "vehicleTypeId": "acme.tugger",
+              "vehicleOrientation": 0.0,
+              "orientationType": "TANGENTIAL",
+              "rotationAllowed": false,
+              "loadRestriction": { "unloaded": true, "loaded": false },
+              "reentryAllowed": true
+            }
+          ]
+        },
+        {
+          "edgeId": "e-west-pick",
+          "startNodeId": "n-aisle-w",
+          "endNodeId": "n-pick",
+          "vehicleTypeEdgeProperties": [
+            {
+              "vehicleTypeId": "acme.forklift",
+              "vehicleOrientation": 1.5707963267948966,
+              "orientationType": "GLOBAL",
+              "rotationAllowed": false,
+              "maxSpeed": 0.8,
+              "maxRotationSpeed": 0.5,
+              "minHeight": 0.1,
+              "maxHeight": 2.2,
+              "loadRestriction": {
+                "unloaded": true,
+                "loaded": true,
+                "loadSetNames": ["EUR-pallet"]
+              }
+            }
+          ]
+        },
+        {
+          "edgeId": "e-pick-west",
+          "startNodeId": "n-pick",
+          "endNodeId": "n-aisle-w",
+          "vehicleTypeEdgeProperties": [
+            {
+              "vehicleTypeId": "acme.forklift",
+              "vehicleOrientation": 1.5707963267948966,
+              "orientationType": "GLOBAL",
+              "rotationAllowed": false,
+              "maxSpeed": 0.8
+            }
+          ]
+        },
+        {
+          "edgeId": "e-east-lift-arc",
+          "edgeName": "Arc to lift",
+          "startNodeId": "n-aisle-e",
+          "endNodeId": "n-lift-g",
+          "vehicleTypeEdgeProperties": [
+            {
+              "vehicleTypeId": "acme.tugger",
+              "vehicleOrientation": 0.0,
+              "orientationType": "TANGENTIAL",
+              "rotationAllowed": false,
+              "trajectory": {
+                "degree": 2,
+                "knotVector": [0, 0, 0, 1, 1, 1],
+                "controlPoints": [
+                  { "x": 12.0, "y": 0.0 },
+                  { "x": 15.0, "y": 3.0, "weight": 0.7071067811865476 },
+                  { "x": 12.0, "y": 6.0 }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "edgeId": "e-lift-up",
+          "edgeName": "Lift transition",
+          "startNodeId": "n-lift-g",
+          "endNodeId": "n-lift-m",
+          "vehicleTypeEdgeProperties": [
+            {
+              "vehicleTypeId": "acme.tugger",
+              "rotationAllowed": false,
+              "reentryAllowed": false
+            }
+          ]
+        }
+      ],
+      "stations": [
+        {
+          "stationId": "st-pick",
+          "interactionNodeIds": ["n-pick"],
+          "stationName": "Pick face A",
+          "stationDescription": "Rack pick/drop face",
+          "stationHeight": 0.4,
+          "stationPosition": { "x": 3.0, "y": 7.0, "theta": 1.5707963267948966 }
+        },
+        {
+          "stationId": "st-charge",
+          "interactionNodeIds": ["n-charge"],
+          "stationName": "Charger 1",
+          "stationHeight": 0.0,
+          "stationPosition": { "x": 17.0, "y": 0.0, "theta": 0.0 }
+        }
+      ]
+    },
+    {
+      "layoutId": "mezzanine",
+      "layoutName": "Mezzanine",
+      "layoutVersion": "2",
+      "layoutLevelId": "1",
+      "nodes": [
+        {
+          "nodeId": "n-lift-m",
+          "nodeName": "Lift door mezzanine",
+          "mapId": "map-mezzanine",
+          "nodePosition": { "x": 12.0, "y": 6.0 },
+          "vehicleTypeNodeProperties": [{ "vehicleTypeId": "acme.tugger" }]
+        },
+        {
+          "nodeId": "n-buf-a",
+          "nodeName": "Buffer A",
+          "mapId": "map-mezzanine",
+          "nodePosition": { "x": 8.0, "y": 6.0 },
+          "vehicleTypeNodeProperties": [
+            {
+              "vehicleTypeId": "acme.tugger",
+              "actions": [
+                { "actionType": "drop", "requirementType": "CONDITIONAL", "blockingType": "HARD" }
+              ]
+            }
+          ]
+        },
+        {
+          "nodeId": "n-buf-b",
+          "nodeName": "Buffer B",
+          "mapId": "map-mezzanine",
+          "nodePosition": { "x": 8.0, "y": 8.0 },
+          "vehicleTypeNodeProperties": [
+            {
+              "vehicleTypeId": "acme.tugger",
+              "actions": [
+                { "actionType": "pick", "requirementType": "CONDITIONAL", "blockingType": "HARD" }
+              ]
+            }
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "e-lift-buf-a",
+          "startNodeId": "n-lift-m",
+          "endNodeId": "n-buf-a",
+          "vehicleTypeEdgeProperties": [
+            {
+              "vehicleTypeId": "acme.tugger",
+              "vehicleOrientation": 3.141592653589793,
+              "orientationType": "TANGENTIAL",
+              "rotationAllowed": false
+            }
+          ]
+        },
+        {
+          "edgeId": "e-buf-a-b",
+          "startNodeId": "n-buf-a",
+          "endNodeId": "n-buf-b",
+          "vehicleTypeEdgeProperties": [
+            {
+              "vehicleTypeId": "acme.tugger",
+              "rotationAllowed": true
+            }
+          ]
+        },
+        {
+          "edgeId": "e-buf-b-lift",
+          "startNodeId": "n-buf-b",
+          "endNodeId": "n-lift-m",
+          "vehicleTypeEdgeProperties": [
+            {
+              "vehicleTypeId": "acme.tugger",
+              "rotationAllowed": true
+            }
+          ]
+        }
+      ],
+      "stations": [
+        {
+          "stationId": "st-handover",
+          "interactionNodeIds": ["n-buf-a", "n-buf-b"],
+          "stationName": "Handover buffer",
+          "stationDescription": "Two-sided handover buffer",
+          "stationHeight": 1.1,
+          "stationPosition": { "x": 7.0, "y": 7.0 }
+        }
+      ]
+    }
+  ]
+}

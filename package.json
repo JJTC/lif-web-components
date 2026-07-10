@@ -1,0 +1,63 @@
+{
+  "name": "lif-web-components",
+  "version": "0.1.0",
+  "description": "Web components for viewing and editing VDMA LIF (Layout Interchange Format 1.0.0) track layouts",
+  "license": "MIT",
+  "type": "module",
+  "module": "./dist/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "development": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./lif": {
+      "types": "./dist/types/lif/index.d.ts",
+      "development": "./src/lif/index.ts",
+      "default": "./dist/lif.js"
+    },
+    "./vda5050": {
+      "types": "./dist/types/vda5050/index.d.ts",
+      "development": "./src/vda5050/index.ts",
+      "default": "./dist/vda5050.js"
+    },
+    "./mc": {
+      "types": "./dist/types/mc/index.d.ts",
+      "development": "./src/mc/index.ts",
+      "default": "./dist/mc.js"
+    }
+  },
+  "sideEffects": [
+    "./src/index.ts",
+    "./src/mc/index.ts",
+    "./src/components/*.ts",
+    "./dist/index.js",
+    "./dist/mc.js"
+  ],
+  "files": [
+    "src",
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "dev": "bun serve.ts",
+    "dev:hmr": "bun ./demo/index.html",
+    "build": "bun run build.ts && bunx tsc -p tsconfig.build.json",
+    "typecheck": "bunx tsc --noEmit",
+    "test": "bun test tests/core",
+    "test:browser": "bun test tests/browser --timeout 90000",
+    "test:dist": "bun test tests/dist",
+    "test:all": "bun test tests/core && bun test tests/browser --timeout 90000",
+    "prepublishOnly": "bun run typecheck && bun test tests/core && bun run build && bun test tests/dist"
+  },
+  "dependencies": {
+    "lit": "^3.2.0"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.0",
+    "playwright-core": "^1.50.0",
+    "typescript": "^5.7.0"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "headerId": 90210,
+  "timestamp": "2026-07-08T09:15:32.612Z",
+  "version": "2.1.0",
+  "manufacturer": "acme-robotics",
+  "serialNumber": "tugger-042",
+  "agvPosition": {
+    "x": 9.05,
+    "y": 2.1,
+    "theta": 1.5707963267948966,
+    "mapId": "map-ground",
+    "positionInitialized": true
+  },
+  "velocity": { "vx": 1.2, "vy": 0, "omega": 0 }
+}

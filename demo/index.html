@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LIF Studio — layout viewer/editor demo</title>
+    <style>
+      :root {
+        --page: #f9f9f7;
+        --panel: #fcfcfb;
+        --ink: #1c1b19;
+        --ink-2: #52514e;
+        --muted: #898781;
+        --border: rgba(11, 11, 11, 0.12);
+        --accent: #2a78d6;
+      }
+      html[data-theme="dark"] {
+        --page: #111110;
+        --panel: #1a1a19;
+        --ink: #f2f1ec;
+        --ink-2: #c3c2b7;
+        --muted: #8f8d85;
+        --border: rgba(255, 255, 255, 0.13);
+        --accent: #3987e5;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+        margin: 0;
+        background: var(--page);
+        color: var(--ink);
+        transition: background 150ms ease;
+      }
+      header {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        padding: 18px 28px 0;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+      header h1 {
+        font-size: 17px;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        margin: 0;
+      }
+      header .tag {
+        color: var(--muted);
+        font-size: 12.5px;
+      }
+      header .spacer {
+        flex: 1;
+      }
+      main {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 14px 28px 40px;
+      }
+      p.lede {
+        margin: 0 0 14px;
+        color: var(--ink-2);
+        font-size: 13px;
+        max-width: 900px;
+      }
+      h2.section-head {
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        text-transform: none;
+        color: var(--ink);
+        margin: 42px 0 6px;
+        padding-top: 18px;
+        border-top: 1px solid var(--border);
+      }
+      h2.section-head:first-of-type {
+        margin-top: 10px;
+        padding-top: 0;
+        border-top: 0;
+      }
+      h2.section-head .kicker {
+        color: var(--accent);
+        margin-right: 6px;
+      }
+      lif-editor {
+        height: 74vh;
+      }
+      lif-editor#mc-editor {
+        height: 64vh;
+      }
+      lif-workspace {
+        height: 54vh;
+      }
+      .merge-note {
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: 0;
+      }
+      h2 {
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        color: var(--muted);
+        margin: 34px 0 10px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      lif-viewer {
+        height: 42vh;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .fleet-row {
+        display: flex;
+        gap: 12px;
+        align-items: stretch;
+      }
+      .fleet-row lif-viewer {
+        flex: 1;
+        min-width: 0;
+      }
+      .fleet-row lif-fleet-panel {
+        width: 280px;
+        height: 42vh;
+      }
+      button.ghost {
+        font: 500 12.5px system-ui, sans-serif;
+        padding: 5px 12px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: var(--panel);
+        color: var(--ink-2);
+        cursor: pointer;
+      }
+      button.ghost:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>LIF Studio</h1>
+      <span class="tag">on-vehicle HMI &amp; master-control components · VDMA LIF 1.0.0</span>
+      <span class="spacer"></span>
+      <button class="ghost" id="theme">Light theme</button>
+    </header>
+    <main>
+      <h2 class="section-head"><span class="kicker">1</span>On-vehicle HMI</h2>
+      <p class="lede">
+        The editor as part of the vehicle's own UI: the vehicle knows itself from
+        its factsheet — creation defaults, physical limits, the action palette — and the operator
+        lays tracks over the vehicle's mapped floor: place nodes, connect edges, mark
+        pick/drop/charging actions, verify distances. Export hands clean LIF to the master
+        control.
+      </p>
+      <lif-editor id="editor" theme="dark"></lif-editor>
+
+      <h2>
+        Live view — this vehicle
+        <button class="ghost" id="hmi-sim">▶ Simulate drive</button>
+      </h2>
+      <p class="lede">
+        A separate read-only view of the same document: the vehicle's own live position and any
+        neighbour it hears about within range.
+      </p>
+      <lif-viewer id="hmi-viewer" theme="dark"></lif-viewer>
+
+      <h2 class="section-head"><span class="kicker">2</span>Master control</h2>
+      <p class="lede">
+        The receiving side: monitor the live fleet with orders and statuses on the map,
+        follow vehicles from the fleet panel — and combine per-integrator handovers into one master
+        layout in the workspace.
+      </p>
+
+      <h2>
+        Live fleet &amp; orders
+        <button class="ghost" id="sim">▶ Simulate vehicles</button>
+      </h2>
+      <div class="fleet-row">
+        <lif-viewer id="viewer" theme="dark"></lif-viewer>
+        <lif-fleet-panel id="fleet" theme="dark"></lif-fleet-panel>
+      </div>
+
+      <h2>
+        Multi-LIF workspace
+        <span class="merge-note" id="merge-note"
+          >align “Annex” onto the warehouse frame (try Δx 18 · Δy −8), then merge</span
+        >
+      </h2>
+      <lif-workspace id="workspace" theme="dark"></lif-workspace>
+
+      <h2>Handover review &amp; vehicle types</h2>
+      <p class="lede">
+        The same editor in master-control posture — no vehicle profile: the <b>Types</b> panel
+        manages the derived roster (rename across the document, coverage counts with a map
+        highlight, “Complete”, removal), every node/edge exposes <b>all</b> its types as full
+        forms, and <b>Checks</b> runs the per-type network analysis (coverage gaps, disconnected
+        islands, one-way traps). Merging in the workspace above loads the master layout here for
+        review.
+      </p>
+      <lif-editor id="mc-editor" theme="dark"></lif-editor>
+    </main>
+    <script type="module" src="./demo.ts"></script>
+  </body>
+</html>

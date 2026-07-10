@@ -1,0 +1,23 @@
+# Development toolbox for the LIF Web Components project.
+#
+# Build:  podman build -t lif-toolbox toolbox/
+# Create: toolbox create lif-dev --image localhost/lif-toolbox
+# Use:    toolbox run -c lif-dev -- bun test
+FROM registry.fedoraproject.org/fedora-toolbox:44
+
+RUN dnf install -y \
+        git \
+        jq \
+        poppler-utils \
+        chromium \
+        zip \
+        unzip \
+    && dnf clean all
+
+# Bun (runtime, package manager, bundler, test runner)
+RUN curl -fsSL https://bun.sh/install | BUN_INSTALL=/usr/local bash \
+    && bun --version
+
+LABEL com.github.containers.toolbox="true" \
+      name="lif-toolbox" \
+      summary="Dev toolbox for the VDMA LIF Web Components (Bun, Chromium for browser tests)"

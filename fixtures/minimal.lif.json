@@ -1,0 +1,42 @@
+{
+  "metaInformation": {
+    "projectIdentification": "Minimal fixture",
+    "creator": "LIF Web Components fixtures",
+    "exportTimestamp": "2026-07-06T10:00:00.00Z",
+    "lifVersion": "1.0.0"
+  },
+  "layouts": [
+    {
+      "layoutId": "ground",
+      "layoutVersion": "1",
+      "nodes": [
+        {
+          "nodeId": "n1",
+          "nodePosition": { "x": 0.0, "y": 0.0 },
+          "vehicleTypeNodeProperties": [{ "vehicleTypeId": "demo.tugger" }]
+        },
+        {
+          "nodeId": "n2",
+          "nodePosition": { "x": 8.0, "y": 0.0 },
+          "vehicleTypeNodeProperties": [{ "vehicleTypeId": "demo.tugger" }]
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "e1",
+          "startNodeId": "n1",
+          "endNodeId": "n2",
+          "vehicleTypeEdgeProperties": [
+            {
+              "vehicleTypeId": "demo.tugger",
+              "vehicleOrientation": 0.0,
+              "orientationType": "TANGENTIAL",
+              "rotationAllowed": false
+            }
+          ]
+        }
+      ],
+      "stations": []
+    }
+  ]
+}

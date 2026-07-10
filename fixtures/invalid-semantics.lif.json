@@ -1,0 +1,115 @@
+{
+  "metaInformation": {
+    "projectIdentification": "Invalid-semantics fixture",
+    "creator": "LIF Web Components fixtures",
+    "exportTimestamp": "2026-07-06T10:00:00.00Z",
+    "lifVersion": "1.0.0"
+  },
+  "layouts": [
+    {
+      "layoutId": "zone-a",
+      "layoutVersion": "1",
+      "nodes": [
+        {
+          "nodeId": "a1",
+          "nodePosition": { "x": 0, "y": 0 },
+          "vehicleTypeNodeProperties": [
+            { "vehicleTypeId": "demo.tugger", "theta": 4.5 },
+            { "vehicleTypeId": "demo.tugger" }
+          ]
+        },
+        {
+          "nodeId": "a1",
+          "nodePosition": { "x": 2, "y": 0 },
+          "vehicleTypeNodeProperties": [{ "vehicleTypeId": "demo.tugger" }]
+        },
+        {
+          "nodeId": "a2",
+          "nodePosition": { "x": 4, "y": 0 },
+          "vehicleTypeNodeProperties": []
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "ea1",
+          "startNodeId": "b1",
+          "endNodeId": "missing-node",
+          "vehicleTypeEdgeProperties": [
+            {
+              "vehicleTypeId": "demo.tugger",
+              "rotationAllowed": false,
+              "maxSpeed": -0.5,
+              "minHeight": 2.0,
+              "maxHeight": 1.0,
+              "loadRestriction": {
+                "unloaded": true,
+                "loaded": false,
+                "loadSetNames": ["EUR-pallet"]
+              },
+              "actions": [
+                {
+                  "actionType": "beep",
+                  "requirementType": "REQUIRED",
+                  "blockingType": "SOFT",
+                  "actionParameters": [
+                    { "key": "volume", "value": "3" },
+                    { "key": "volume", "value": "5" }
+                  ]
+                },
+                {
+                  "actionType": "flash",
+                  "requirementType": "REQUIRED",
+                  "blockingType": "NONE"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "edgeId": "ea2",
+          "startNodeId": "a2",
+          "endNodeId": "a2",
+          "vehicleTypeEdgeProperties": [
+            {
+              "vehicleTypeId": "demo.tugger",
+              "rotationAllowed": false,
+              "trajectory": {
+                "degree": 2,
+                "knotVector": [0, 0, 0, 1, 1],
+                "controlPoints": [
+                  { "x": 4, "y": 0 },
+                  { "x": 5, "y": 1, "weight": -1 },
+                  { "x": 6, "y": 0 }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "stations": [
+        {
+          "stationId": "sa1",
+          "interactionNodeIds": [],
+          "stationHeight": -0.5
+        },
+        {
+          "stationId": "sa2",
+          "interactionNodeIds": ["ghost-node", "b1"]
+        }
+      ]
+    },
+    {
+      "layoutId": "zone-b",
+      "layoutVersion": "1",
+      "nodes": [
+        {
+          "nodeId": "b1",
+          "nodePosition": { "x": 10, "y": 0 },
+          "vehicleTypeNodeProperties": [{ "vehicleTypeId": "demo.tugger" }]
+        }
+      ],
+      "edges": [],
+      "stations": []
+    }
+  ]
+}

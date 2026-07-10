@@ -1,0 +1,56 @@
+{
+  "headerId": 1,
+  "timestamp": "2026-07-08T06:00:00.000Z",
+  "version": "2.1.0",
+  "manufacturer": "acme-robotics",
+  "serialNumber": "tugger-042",
+  "typeSpecification": {
+    "seriesName": "tugger",
+    "seriesDescription": "Tow tractor for warehouse trains",
+    "agvKinematic": "DIFF",
+    "agvClass": "TUGGER",
+    "maxLoadMass": 800,
+    "localizationTypes": ["NATURAL"],
+    "navigationTypes": ["AUTONOMOUS"]
+  },
+  "physicalParameters": {
+    "speedMin": 0.05,
+    "speedMax": 1.8,
+    "accelerationMax": 0.6,
+    "decelerationMax": 0.9,
+    "heightMin": 0.4,
+    "heightMax": 2.0,
+    "width": 0.85,
+    "length": 1.45
+  },
+  "protocolFeatures": {
+    "optionalParameters": [],
+    "agvActions": [
+      {
+        "actionType": "pick",
+        "actionDescription": "Pick a load at the current station",
+        "actionScopes": ["NODE"],
+        "actionParameters": [
+          { "key": "stationType", "valueDataType": "STRING" }
+        ]
+      },
+      {
+        "actionType": "drop",
+        "actionScopes": ["NODE"]
+      },
+      {
+        "actionType": "startCharging",
+        "actionScopes": ["INSTANT", "NODE"]
+      },
+      {
+        "actionType": "cancelOrder",
+        "actionScopes": ["INSTANT"]
+      },
+      {
+        "actionType": "beep",
+        "actionDescription": "Acoustic signal",
+        "actionScopes": ["INSTANT", "NODE", "EDGE"]
+      }
+    ]
+  }
+}

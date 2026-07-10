@@ -1,0 +1,57 @@
+{
+  "headerId": 4711,
+  "timestamp": "2026-07-08T09:15:32.412Z",
+  "version": "2.1.0",
+  "manufacturer": "acme-robotics",
+  "serialNumber": "tugger-042",
+  "orderId": "order-7f3a",
+  "orderUpdateId": 3,
+  "zoneSetId": "",
+  "lastNodeId": "n-aisle-w",
+  "lastNodeSequenceId": 6,
+  "driving": true,
+  "paused": false,
+  "newBaseRequest": false,
+  "distanceSinceLastNode": 0.42,
+  "operatingMode": "AUTOMATIC",
+  "nodeStates": [],
+  "edgeStates": [],
+  "agvPosition": {
+    "x": 8.35,
+    "y": 2.1,
+    "theta": 1.5707963267948966,
+    "mapId": "map-ground",
+    "positionInitialized": true,
+    "localizationScore": 0.94
+  },
+  "velocity": { "vx": 1.1, "vy": 0, "omega": 0 },
+  "loads": [
+    {
+      "loadId": "pallet-9931",
+      "loadType": "EPAL",
+      "loadPosition": "hook",
+      "weight": 412
+    }
+  ],
+  "actionStates": [
+    { "actionId": "a-1", "actionType": "pick", "actionStatus": "FINISHED" }
+  ],
+  "batteryState": {
+    "batteryCharge": 73.5,
+    "batteryVoltage": 47.8,
+    "charging": false,
+    "reach": 5200
+  },
+  "errors": [
+    {
+      "errorType": "lidarContamination",
+      "errorLevel": "WARNING",
+      "errorDescription": "Front LiDAR window needs cleaning",
+      "errorReferences": [
+        { "referenceKey": "sensorId", "referenceValue": "lidar-front" }
+      ]
+    }
+  ],
+  "information": [],
+  "safetyState": { "eStop": "NONE", "fieldViolation": false }
+}

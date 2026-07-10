@@ -1,0 +1,44 @@
+{
+  "headerId": 88,
+  "timestamp": "2026-07-09T10:00:00.000Z",
+  "version": "2.1.0",
+  "manufacturer": "acme-robotics",
+  "serialNumber": "tugger-042",
+  "orderId": "order-7f3a",
+  "orderUpdateId": 4,
+  "zoneSetId": "",
+  "nodes": [
+    {
+      "nodeId": "n-dock",
+      "sequenceId": 0,
+      "released": true,
+      "actions": [{ "actionId": "a-pick", "actionType": "pick", "blockingType": "HARD" }]
+    },
+    { "nodeId": "n-aisle-w", "sequenceId": 2, "released": true, "actions": [] },
+    {
+      "nodeId": "n-aisle-e",
+      "sequenceId": 4,
+      "released": false,
+      "actions": [
+        { "actionId": "a-drop", "actionType": "drop", "blockingType": "HARD" },
+        { "actionId": "a-beep", "actionType": "beep", "blockingType": "NONE" }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "edgeId": "e-dock-west",
+      "sequenceId": 1,
+      "released": true,
+      "startNodeId": "n-dock",
+      "endNodeId": "n-aisle-w"
+    },
+    {
+      "edgeId": "e-west-east",
+      "sequenceId": 3,
+      "released": false,
+      "startNodeId": "n-aisle-w",
+      "endNodeId": "n-aisle-e"
+    }
+  ]
+}

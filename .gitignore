@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+coverage/
+
+# Editor/OS noise
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# Test artifacts
+test-results/
+playwright-report/
+__screenshots__/
+
+/EXTRA/

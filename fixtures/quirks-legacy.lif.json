@@ -1,0 +1,73 @@
+{
+  "metaInformation": {
+    "projectIdentification": "Quirks fixture (real-world export oddities)",
+    "creator": "LIF Web Components fixtures",
+    "exportTimestamp": "2026-07-06T10:00:00.00Z",
+    "lifVersion": "1.0.0"
+  },
+  "layouts": [
+    {
+      "layoutId": "hall",
+      "layoutVersion": 1,
+      "x-vendor-extension": { "sourceTool": "PlannerX 9.1" },
+      "nodes": [
+        {
+          "nodeId": "q1",
+          "nodePosition": { "x": 0, "y": 0 },
+          "vehicleTypeNodeProperties": [
+            {
+              "vehicleTypeId": "demo.tugger",
+              "theta": "1.5707963267948966",
+              "actions": [
+                {
+                  "actionType": "beep",
+                  "required": true,
+                  "blockingType": "SOFT"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "nodeId": "q2",
+          "nodePosition": { "x": "6.5", "y": 0 },
+          "vehicleTypeNodeProperties": [{ "vehicleTypeId": "demo.tugger" }]
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "qe1",
+          "startNodeId": "q1",
+          "endNodeId": "q2",
+          "vehicleTypeEdgeProperties": [
+            {
+              "vehicleTypeId": "demo.tugger",
+              "rotationAllowed": "false",
+              "maxSpeed": "1.2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "layoutId": "annex",
+      "layoutVersion": "1",
+      "nodes": [
+        {
+          "nodeId": "q3",
+          "nodePosition": { "x": 0, "y": 4 },
+          "vehicleTypeNodeProperties": [{ "vehicleTypeId": "demo.tugger" }]
+        }
+      ],
+      "edges": [],
+      "stations": [
+        {
+          "stationId": "qs1",
+          "interactionNodeIds": ["q3"],
+          "stationName": "Legacy shelf",
+          "stationHeight": "0.55"
+        }
+      ]
+    }
+  ]
+}
