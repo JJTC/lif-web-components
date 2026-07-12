@@ -1,0 +1,40 @@
+# Full verification on every push/PR: typecheck, core tests, browser tests
+# (real Chrome — the runner image ships /usr/bin/google-chrome, which the
+# harness supports; no mocks, per ADR 0007), build, and dist smoke tests.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Typecheck
+        run: bun run typecheck
+
+      - name: Core tests
+        run: bun test tests/core
+
+      - name: Browser tests (real Chrome, no mocks)
+        run: bun test tests/browser --timeout 90000
+        env:
+          CHROMIUM_BIN: /usr/bin/google-chrome
+
+      - name: Build bundles and declarations
+        run: bun run build
+
+      - name: Dist smoke tests
+        run: bun run test:dist

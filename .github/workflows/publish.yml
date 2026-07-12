@@ -1,0 +1,42 @@
+# Publish to npm when a version tag (v*) is pushed. Requires the NPM_TOKEN
+# repository secret (an npm automation token). `bun publish` runs the
+# package's prepublishOnly script, which re-verifies typecheck + core tests +
+# build + dist smoke tests; the browser suite runs here explicitly since
+# prepublishOnly must stay runnable on machines without a browser.
+name: Publish
+
+on:
+  push:
+    tags: ["v*"]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Tag must match package.json version
+        run: |
+          pkg="v$(bun -p "require('./package.json').version")"
+          if [ "$pkg" != "$GITHUB_REF_NAME" ]; then
+            echo "tag $GITHUB_REF_NAME does not match package version $pkg" >&2
+            exit 1
+          fi
+
+      - name: Browser tests (real Chrome, no mocks)
+        run: bun test tests/browser --timeout 90000
+        env:
+          CHROMIUM_BIN: /usr/bin/google-chrome
+
+      - name: Publish (runs prepublishOnly verification)
+        run: bun publish --access public
+        env:
+          NPM_CONFIG_TOKEN: ${{ secrets.NPM_TOKEN }}
